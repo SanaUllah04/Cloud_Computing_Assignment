@@ -40,7 +40,7 @@ app.post("/submit", async (req, res) => {
     const params = {
       TableName: process.env.TABLE_NAME || "my-database",
       Item: {
-        id: Date.now().toString(),
+        id: Date.now(),
         Name: username,
         Email: email,
         Password: hashedPassword,
