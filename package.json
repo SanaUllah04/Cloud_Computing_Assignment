@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node index.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.1536.0",
-    "bcrypt": "^5.1.0",
-    "body-parser": "^1.20.2",
+    "@aws-sdk/client-dynamodb": "^3.480.0",
+    "@aws-sdk/lib-dynamodb": "^3.480.0",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2"
   }
