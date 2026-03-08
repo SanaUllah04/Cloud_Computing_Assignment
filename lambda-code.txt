@@ -1,0 +1,41 @@
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+
+const sesClient = new SESClient({ region: "ap-south-1" });
+
+export const handler = async (event) => {
+  console.log("Received event:", JSON.stringify(event, null, 2));
+
+  try {
+    for (const record of event.Records) {
+      const newImage = record.dynamodb.NewImage;
+      const username = newImage.username.S;
+      const email = newImage.email.S;
+
+      const params = {
+        Source: "chetannamne2609@gmail.com", // Replace with domain-based email when available
+        Destination: {
+          ToAddresses: [email],
+        },
+        Message: {
+          Subject: {
+            Data: `Welcome to Our Service, ${username}!`,
+          },
+          Body: {
+            Text: {
+              Data: `Hi ${username},\n\nWe're excited to have you on board!\nLet us know if you need anything.\n\nCheers,\nTeam Chetan\nsupport@yourdomain.com`,
+            },
+          },
+        },
+      };
+
+      const command = new SendEmailCommand(params);
+      const result = await sesClient.send(command);
+      console.log("Email sent:", result);
+    }
+
+    return { statusCode: 200, body: "Emails sent" };
+  } catch (err) {
+    console.error("Failed to send email:", err);
+    return { statusCode: 500, body: "Failed to send email" };
+  }
+};
