@@ -38,7 +38,7 @@ app.post("/submit", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const params = {
-      TableName: process.env.TABLE_NAME || "user-signups",
+      TableName: process.env.TABLE_NAME || "my-database",
       Item: {
         userId: Date.now().toString(),
         username: username,
